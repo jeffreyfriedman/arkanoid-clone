@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour {
 	void Start () {
 		paddle = GameObject.FindObjectOfType<Paddle>();
 		paddleToBallVector = this.transform.position - paddle.transform.position;
-		print (paddleToBallVector.y);
 	}
 
 	// Update is called once per frame
@@ -25,5 +24,12 @@ public class Ball : MonoBehaviour {
 				this.GetComponent<Rigidbody2D>().velocity = new Vector2 (2f, 10f);
 			}
 		}	
+	}
+
+	void OnCollisionEnter2D (Collision2D collision) {
+	// Boing sound played on every collision is irritating
+//		if (hasStarted) {
+//			GetComponent<AudioSource> ().Play ();
+//		}
 	}
 }
