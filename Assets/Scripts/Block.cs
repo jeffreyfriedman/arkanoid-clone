@@ -5,6 +5,7 @@ public class Block : MonoBehaviour {
 	public AudioClip crack;
 	public Sprite[] hitSprites; 
 	public static int breakableCount = 0;
+	public GameObject smoke;
 
 	private int timesHit;
 	private LevelManager levelManager;
@@ -40,17 +41,25 @@ public class Block : MonoBehaviour {
 		if (timesHit >= maxHits) {
 			breakableCount--;
 			levelManager.BrickDestroyed();
+			SmokeEffect();
 			Destroy(gameObject);
 		} else {
 			LoadSprites();
 		}
 	}
 
+	void SmokeEffect() {
+		GameObject smokePuff = Instantiate(smoke, gameObject.transform.position, Quaternion.identity) as GameObject;
+		smokePuff.GetComponent<ParticleSystem>().startColor = gameObject.GetComponent<SpriteRenderer>().color;
+	}
+
 	void LoadSprites() {
 		int spriteIndex = timesHit - 1;
 		if (hitSprites[spriteIndex]) {  // to guard against accidentally omitted sprites
 			this.GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
-		} 
+		} else {
+			Debug.LogError("Block sprite missing.");
+		}
 	}
 
 	// TODO Remove this method once we can actually win
