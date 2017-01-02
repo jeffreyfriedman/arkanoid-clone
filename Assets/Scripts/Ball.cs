@@ -27,9 +27,14 @@ public class Ball : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D collision) {
-	// Boing sound played on every collision is irritating
-//		if (hasStarted) {
+		Vector2 tweak = new Vector2(Random.Range(0f, 0.2f), Random.Range(0f, 0.2f));
+	
+		if (hasStarted) {
+			// Boing sound played on every collision is irritating
 //			GetComponent<AudioSource> ().Play ();
-//		}
+
+			// add random increment of velocity on collision to ensure infinite up-down loops don't occur
+			GetComponent<Rigidbody2D>().velocity += tweak;
+		}
 	}
 }
